@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import Item from "./components/Item.jsx";
 
 const API_ADDR = 'https://2a6sqsw1lf.execute-api.us-east-1.amazonaws.com';
 
@@ -36,11 +37,14 @@ class App extends React.Component {
   }
 
   render() {
+    const { itemA, itemB } = this.state;
     return (
       <>
-        <h1>
-          Comparator
-        </h1>
+        <h1 className="unselectable">Who would win?</h1>
+        <div className="itemContainer unselectable">
+          {itemA ? <Item item={itemA} /> : null}
+          {itemB ? <Item item={itemB} /> : null}
+        </div>
       </>
     );
   }

@@ -1,0 +1,30 @@
+.unselectable {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+h1 {
+  text-align: center;
+}
+
+.itemContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.item {
+  margin: 0;
+  max-width: 45vw;
+}
+
+.item img {
+  max-width: 100%;
+  max-height: 60vh;
+}
+
+.item figcaption {
+  text-align: center;
+  font-weight: bold;
+}
