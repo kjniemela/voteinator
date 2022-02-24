@@ -1,6 +1,5 @@
 
 .cache/
-dist/*
-!dist/index.html
+bundle.js
 node_modules/
 package-lock.json
