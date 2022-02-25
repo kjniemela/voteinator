@@ -44,10 +44,8 @@ class App extends React.Component {
       idB: itemB.id,
       winner,
     })
-      .then(({ data }) => {
-        itemA.score = data[0];
-        itemB.score = data[1];
-        this.setState({ itemA, itemB });
+      .then((result) => {
+        this.fetchRandomPair();
       })
       .catch((err) => {
         console.error(err);
