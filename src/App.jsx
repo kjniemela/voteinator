@@ -39,12 +39,14 @@ class App extends React.Component {
   voteFor(winner) {
     const { group, itemA, itemB } = this.state;
     axios.post(`${API_ADDR}/${group}/compare`, {
-      itemA,
-      itemB,
+      idA: itemA.id,
+      idB: itemB.id,
       winner,
     })
-      .then((result) => {
-        console.log(result);
+      .then(({ data }) => {
+        itemA.score = data[0];
+        itemB.score = data[1];
+        this.setState({ itemA, itemB });
       })
       .catch((err) => {
         console.error(err);
