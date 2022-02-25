@@ -12,6 +12,7 @@ class App extends React.Component {
       itemA: null,
       itemB: null,
     };
+    this.fetchRandomPair = this.fetchRandomPair.bind(this);
   }
 
   componentDidMount() {
@@ -61,6 +62,9 @@ class App extends React.Component {
         <div className="itemContainer unselectable">
           {itemA ? <Item item={itemA} voteFn={() => this.voteFor('A')} /> : null}
           {itemB ? <Item item={itemB} voteFn={() => this.voteFor('B')} /> : null}
+        </div>
+        <div className="itemContainer unselectable">
+          <button onClick={this.fetchRandomPair}>New Pair</button>
         </div>
       </>
     );
