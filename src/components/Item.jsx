@@ -1,7 +1,8 @@
 import React from "react";
 
-const Item = ({ item }) => (
-  <div className="item" onClick={() => console.log(item.caption)}>
+const Item = ({ item, voteFn }) => (
+  <div className="item" onClick={voteFn}>
+    <h3>Rating: {item.score}</h3>
     <figure>
       <img src={item.img} alt={item.caption}></img>
       <figcaption>{item.desc}</figcaption>

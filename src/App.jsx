@@ -36,14 +36,31 @@ class App extends React.Component {
     }
   }
 
+  voteFor(winner) {
+    const { group, itemA, itemB } = this.state;
+    axios.post(`${API_ADDR}/${group}/compare`, {
+      idA: itemA.id,
+      idB: itemB.id,
+      winner,
+    })
+      .then(({ data }) => {
+        itemA.score = data[0];
+        itemB.score = data[1];
+        this.setState({ itemA, itemB });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
+
   render() {
     const { itemA, itemB } = this.state;
     return (
       <>
         <h1 className="unselectable">Who would win?</h1>
         <div className="itemContainer unselectable">
-          {itemA ? <Item item={itemA} /> : null}
-          {itemB ? <Item item={itemB} /> : null}
+          {itemA ? <Item item={itemA} voteFn={() => this.voteFor('A')} /> : null}
+          {itemB ? <Item item={itemB} voteFn={() => this.voteFor('B')} /> : null}
         </div>
       </>
     );
