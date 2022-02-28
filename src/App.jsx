@@ -13,15 +13,18 @@ class App extends React.Component {
       group: location.hash.substr(1),
       itemA: null,
       itemB: null,
+      rankList: [],
       view: 'vote',
     };
     this.fetchRandomPair = this.fetchRandomPair.bind(this);
+    this.fetchLeaderboard = this.fetchLeaderboard.bind(this);
   }
 
   componentDidMount() {
     const { group } = this.state;
     if (group) {
       this.fetchRandomPair();
+      this.fetchLeaderboard();
     }
   }
 
@@ -49,14 +52,38 @@ class App extends React.Component {
     })
       .then((result) => {
         this.fetchRandomPair();
+        this.fetchLeaderboard();
       })
       .catch((err) => {
         console.error(err);
       })
   }
 
+  fetchLeaderboard() {
+    const { group } = this.state;
+    if (group) {
+      axios.get(`${API_ADDR}/${group}/items`)
+        .then(({ data }) => {
+          const rankList = data.Items;
+          rankList.sort((a, b) => {
+            if (a.score > b.score) {
+              return -1;
+            } else if (a.score < b.score) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+          this.setState({ rankList });
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+
   render() {
-    const { itemA, itemB, view } = this.state;
+    const { itemA, itemB, view, rankList } = this.state;
     if (view === 'vote') {
       return (
         <>
@@ -79,9 +106,10 @@ class App extends React.Component {
           <h1 className="unselectable">Leaderboard</h1>
           <div className="itemContainer unselectable">
             <button onClick={() => this.setState({ view: 'vote' })}>Back</button>
+            <button onClick={this.fetchLeaderboard}>Refresh</button>
           </div>
           <div className="itemContainer unselectable">
-            <Leaderboard />
+            <Leaderboard rankList={rankList}/>
           </div>
         </>
       );
