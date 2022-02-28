@@ -28,3 +28,17 @@ h1 {
   text-align: center;
   font-weight: bold;
 }
+
+.leaderboard {
+  width: 80%;
+}
+
+.leaderboardItem {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+}
+
+.leaderboardItem img {
+  height: 50px;
+}
