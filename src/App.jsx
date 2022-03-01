@@ -11,6 +11,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       group: location.hash.substr(1),
+      pairId: null,
       itemA: null,
       itemB: null,
       rankList: [],
@@ -35,7 +36,8 @@ class App extends React.Component {
         .then(({ data }) => {
           const itemA = data.Items[0];
           const itemB = data.Items[1];
-          this.setState({ itemA, itemB });
+          const pairId = data.pairId;
+          this.setState({ itemA, itemB, pairId });
         })
         .catch((err) => {
           console.error(err);
@@ -44,10 +46,9 @@ class App extends React.Component {
   }
 
   voteFor(winner) {
-    const { group, itemA, itemB } = this.state;
+    const { group, itemA, itemB, pairId } = this.state;
     axios.post(`${API_ADDR}/${group}/compare`, {
-      idA: itemA.id,
-      idB: itemB.id,
+      pairId,
       winner,
     })
       .then((result) => {
