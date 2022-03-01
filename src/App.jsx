@@ -96,9 +96,9 @@ class App extends React.Component {
             {itemA ? <Item item={itemA} voteFn={() => this.voteFor('A')} /> : null}
             {itemB ? <Item item={itemB} voteFn={() => this.voteFor('B')} /> : null}
           </div>
-          <div className="itemContainer unselectable">
+          {/* <div className="itemContainer unselectable">
             <button onClick={this.fetchRandomPair}>New Pair</button>
-          </div>
+          </div> */}
         </>
       );
     } else if (view === 'leaderboard') {
