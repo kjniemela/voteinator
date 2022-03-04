@@ -15,8 +15,13 @@ h1 {
 }
 
 .item {
+  display: grid;
   margin: 0;
   max-width: 45vw;
+}
+
+.item figure {
+  align-self: end;
 }
 
 .item img {
