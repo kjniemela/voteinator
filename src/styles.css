@@ -5,6 +5,10 @@
   user-select: none; /* Standard */
 }
 
+body {
+  background-image: url('https://open.kattis.com/images/site/content/kattis-grain.png');
+}
+
 h1 {
   text-align: center;
 }
@@ -15,8 +19,13 @@ h1 {
 }
 
 .item {
+  display: grid;
   margin: 0;
   max-width: 45vw;
+}
+
+.item figure {
+  align-self: end;
 }
 
 .item img {
