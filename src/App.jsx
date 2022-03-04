@@ -51,7 +51,6 @@ class App extends React.Component {
               nextItemA = data.Items[0];
               nextItemB = data.Items[1];
               nextPairId = data.pairId;
-              console.log(lastPairId, pairId, nextPairId);
               this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true });
             })
             .catch((err) => {
@@ -71,7 +70,6 @@ class App extends React.Component {
   voteFor(winner) {
     const { group, itemA, itemB, pairId } = this.state;
     this.setState({ canVote: false }, () => {
-      console.log('vote');
       this.fetchRandomPair();
       axios.post(`${API_ADDR}/${group}/compare`, {
         pairId,
