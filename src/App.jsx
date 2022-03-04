@@ -37,38 +37,42 @@ class App extends React.Component {
   }
 
   fetchRandomPair() {
-    const { group } = this.state;
+    const { group, lastCallTime } = this.state;
     let { nextItemA, nextItemB, nextPairId, pairId } = this.state;
     const itemA = nextItemA;
     const itemB = nextItemB;
     const lastPairId = pairId;
     pairId = nextPairId;
     this.setState({ itemA, itemB, pairId, lastPairId }, () => {
-      if (group) {
-        axios.get(`${API_ADDR}/${group}/items/randomPair`)
-          .then(({ data }) => {
-            nextItemA = data.Items[0];
-            nextItemB = data.Items[1];
-            nextPairId = data.pairId;
-            console.log(lastPairId, pairId, nextPairId);
-            this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true });
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+      const fetchFn = () => {
+        if (group) {
+          axios.get(`${API_ADDR}/${group}/items/randomPair`)
+            .then(({ data }) => {
+              nextItemA = data.Items[0];
+              nextItemB = data.Items[1];
+              nextPairId = data.pairId;
+              console.log(lastPairId, pairId, nextPairId);
+              this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true });
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }
+      };
+      if (new Date() - lastCallTime > 1000) {
+        fetchFn();
+      } else {
+        setTimeout(fetchFn, 1000 - (new Date() - lastCallTime));
       }
+
     });
   }
 
   voteFor(winner) {
-    const { group, itemA, itemB, pairId, lastCallTime } = this.state;
+    const { group, itemA, itemB, pairId } = this.state;
     this.setState({ canVote: false }, () => {
       console.log('vote');
-      if (new Date() - lastCallTime > 1000) {
-        this.fetchRandomPair();
-      } else {
-        setTimeout(this.fetchRandomPair, 1000 - (new Date() - lastCallTime));
-      }
+      this.fetchRandomPair();
       axios.post(`${API_ADDR}/${group}/compare`, {
         pairId,
         winner,
