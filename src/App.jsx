@@ -14,6 +14,12 @@ class App extends React.Component {
       pairId: null,
       itemA: null,
       itemB: null,
+      nextPairId: null,
+      nextItemA: null,
+      nextItemB: null,
+      lastPairId: null,
+      lastCallTime: new Date(),
+      canVote: true,
       rankList: [],
       view: 'vote',
     };
@@ -25,39 +31,55 @@ class App extends React.Component {
     const { group } = this.state;
     if (group) {
       this.fetchRandomPair();
+      setTimeout(this.fetchRandomPair, 2000);
       this.fetchLeaderboard();
     }
   }
 
   fetchRandomPair() {
     const { group } = this.state;
-    if (group) {
-      axios.get(`${API_ADDR}/${group}/items/randomPair`)
-        .then(({ data }) => {
-          const itemA = data.Items[0];
-          const itemB = data.Items[1];
-          const pairId = data.pairId;
-          this.setState({ itemA, itemB, pairId });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
+    let { nextItemA, nextItemB, nextPairId, pairId } = this.state;
+    const itemA = nextItemA;
+    const itemB = nextItemB;
+    const lastPairId = pairId;
+    pairId = nextPairId;
+    this.setState({ itemA, itemB, pairId, lastPairId }, () => {
+      if (group) {
+        axios.get(`${API_ADDR}/${group}/items/randomPair`)
+          .then(({ data }) => {
+            nextItemA = data.Items[0];
+            nextItemB = data.Items[1];
+            nextPairId = data.pairId;
+            console.log(lastPairId, pairId, nextPairId);
+            this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    });
   }
 
   voteFor(winner) {
-    const { group, itemA, itemB, pairId } = this.state;
-    axios.post(`${API_ADDR}/${group}/compare`, {
-      pairId,
-      winner,
-    })
-      .then((result) => {
+    const { group, itemA, itemB, pairId, lastCallTime } = this.state;
+    this.setState({ canVote: false }, () => {
+      console.log('vote');
+      if (new Date() - lastCallTime > 1000) {
         this.fetchRandomPair();
-        this.fetchLeaderboard();
+      } else {
+        setTimeout(this.fetchRandomPair, 1000 - (new Date() - lastCallTime));
+      }
+      axios.post(`${API_ADDR}/${group}/compare`, {
+        pairId,
+        winner,
       })
-      .catch((err) => {
-        console.error(err);
-      })
+        .then((result) => {
+          this.fetchLeaderboard();
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+    });
   }
 
   fetchLeaderboard() {
@@ -84,7 +106,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { itemA, itemB, view, rankList } = this.state;
+    const { itemA, itemB, view, rankList, canVote } = this.state;
     if (view === 'vote') {
       return (
         <>
@@ -93,12 +115,12 @@ class App extends React.Component {
             <button onClick={() => this.setState({ view: 'leaderboard' })}>Leaderboard</button>
           </div>
           <div className="itemContainer unselectable">
-            {itemA ? <Item item={itemA} voteFn={() => this.voteFor('A')} /> : null}
-            {itemB ? <Item item={itemB} voteFn={() => this.voteFor('B')} /> : null}
+            {itemA ? <Item item={itemA} voteFn={canVote ? () => this.voteFor('A') : () => {}} /> : null}
+            {itemB ? <Item item={itemB} voteFn={canVote ? () => this.voteFor('B') : () => {}} /> : null}
           </div>
-          {/* <div className="itemContainer unselectable">
+          <div className="itemContainer unselectable">
             <button onClick={this.fetchRandomPair}>New Pair</button>
-          </div> */}
+          </div>
         </>
       );
     } else if (view === 'leaderboard') {
