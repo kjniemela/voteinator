@@ -4,7 +4,7 @@ import LeaderboardItem from "./LeaderboardItem.jsx";
 const Leaderboard = ({ rankList }) => (
   <ol className="leaderboard">
     {rankList.map((item, i) => (
-      <li><div className="leaderboardItemContainer"><LeaderboardItem item={item} key={i} /></div></li>
+      <li key={i}><div className="leaderboardItemContainer"><LeaderboardItem item={item} /></div></li>
     ))}
   </ol>
 );
