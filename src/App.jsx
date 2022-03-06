@@ -112,7 +112,7 @@ class App extends React.Component {
     if (view === 'vote') {
       return (
         <>
-          <h1 className="unselectable">Who would win?</h1>
+          <h1 className="unselectable">Which {location.hash.substr(1, location.hash.length-2)} would you prefer?</h1>
           <div className="itemContainer unselectable">
             <button onClick={() => this.setState({ view: 'leaderboard' })}>Leaderboard</button>
           </div>
@@ -120,9 +120,9 @@ class App extends React.Component {
             {itemA ? <Item item={itemA} voteFn={canVote ? () => this.voteFor('A') : () => {}} /> : null}
             {itemB ? <Item item={itemB} voteFn={canVote ? () => this.voteFor('B') : () => {}} /> : null}
           </div>
-          <div className="itemContainer unselectable">
+          {/* <div className="itemContainer unselectable">
             <button onClick={this.fetchRandomPair}>New Pair</button>
-          </div>
+          </div> */}
         </>
       );
     } else if (view === 'leaderboard') {
