@@ -2,11 +2,11 @@ import React from "react";
 import LeaderboardItem from "./LeaderboardItem.jsx";
 
 const Leaderboard = ({ rankList }) => (
-  <div className="leaderboard">
+  <ol className="leaderboard">
     {rankList.map((item, i) => (
-      <LeaderboardItem item={item} key={i} />
+      <li><div className="leaderboardItemContainer"><LeaderboardItem item={item} key={i} /></div></li>
     ))}
-  </div>
+  </ol>
 );
 
 export default Leaderboard;

@@ -44,6 +44,12 @@ h1 {
   width: 80%;
 }
 
+.leaderboardItemContainer {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+}
+
 .leaderboardItem {
   display: flex;
   justify-content: space-between;
