@@ -67,7 +67,7 @@ h3:active {
   height: 18vw;
   object-fit: contain;
   margin: auto;
-  box-shadow: 0 0 15px rgb(0 0 0 / 0.4);
+  filter: drop-shadow(0 0 15px rgb(0 0 0 / 0.4));
 }
 
 .item figcaption {
@@ -97,4 +97,5 @@ h3:active {
   height: 50px;
   width: 100px;
   object-fit: contain;
+  filter: drop-shadow(0 0 15px rgb(0 0 0 / 0.4));
 }

@@ -153,7 +153,9 @@ class App extends React.Component {
             <button onClick={() => this.setState({ view: 'leaderboard' })}>Leaderboard</button>
           </div>
           <div className="itemContainer unselectable">
-            {itemA ? <Item item={itemA} voteFn={canVote ? () => this.voteFor('A') : () => {}} /> : null}
+            {itemA ? (
+              <Item item={itemA} voteFn={canVote ? () => this.voteFor('A') : () => {}} />
+             ) : <button onClick={this.fetchRandomPair}>Load</button>}
             {itemB ? <Item item={itemB} voteFn={canVote ? () => this.voteFor('B') : () => {}} /> : null}
           </div>
           {/* <div className="itemContainer unselectable">
