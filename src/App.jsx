@@ -123,9 +123,9 @@ class App extends React.Component {
         <>
           {header}
           <h1 className="unselectable">Categories</h1>
-          <h3 className="unselectable">Letters</h3>
-          <h3 className="unselectable">Colors</h3>
-          <h3 className="unselectable">Flags</h3>
+          <h3 className="unselectable" onClick={() => this.setGroup('letters')}>Letters</h3>
+          <h3 className="unselectable" onClick={() => this.setGroup('colors')}>Colors</h3>
+          <h3 className="unselectable" onClick={() => this.setGroup('flags')}>Flags</h3>
         </>
       );
     }

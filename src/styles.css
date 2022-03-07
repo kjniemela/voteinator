@@ -7,12 +7,11 @@
 
 * {
   box-sizing: border-box;
-  margin: 0;
 }
 
-#app {
+body {
+  margin: 0;
   background-image: url('https://open.kattis.com/images/site/content/kattis-grain.png');
-  height: 100vh;
 }
 
 .header {
