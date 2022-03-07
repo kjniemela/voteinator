@@ -5,12 +5,38 @@
   user-select: none; /* Standard */
 }
 
-body {
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+#app {
   background-image: url('https://open.kattis.com/images/site/content/kattis-grain.png');
+  height: 100vh;
+}
+
+.header {
+  height: 70px;
+  background-color: #777;
 }
 
 h1 {
   text-align: center;
+}
+
+h3 {
+  text-align: center;
+  border: 4px outset darkgray;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  width: 200px;
+  margin: 15px auto;
+  padding: 5px;
+}
+
+h3:active {
+  text-align: center;
+  border: 4px inset darkgray;
 }
 
 .itemContainer {

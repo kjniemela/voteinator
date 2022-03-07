@@ -25,6 +25,7 @@ class App extends React.Component {
     };
     this.fetchRandomPair = this.fetchRandomPair.bind(this);
     this.fetchLeaderboard = this.fetchLeaderboard.bind(this);
+    this.setGroup = this.setGroup.bind(this);
   }
 
   componentDidMount() {
@@ -107,11 +108,31 @@ class App extends React.Component {
     }
   }
 
+  setGroup(group) {
+    location.hash = `#${group}`;
+    this.setState({ group });
+  }
+
   render() {
-    const { itemA, itemB, view, rankList, canVote } = this.state;
-    if (view === 'vote') {
+    const { group, itemA, itemB, view, rankList, canVote } = this.state;
+    const header = (
+      <div className="header"></div>
+    );
+    if (!group) {
       return (
         <>
+          {header}
+          <h1 className="unselectable">Categories</h1>
+          <h3 className="unselectable">Letters</h3>
+          <h3 className="unselectable">Colors</h3>
+          <h3 className="unselectable">Flags</h3>
+        </>
+      );
+    }
+    else if (view === 'vote') {
+      return (
+        <>
+          {header}
           <h1 className="unselectable">Which {location.hash.substr(1, location.hash.length-2)} would you prefer?</h1>
           <div className="itemContainer unselectable">
             <button onClick={() => this.setState({ view: 'leaderboard' })}>Leaderboard</button>
@@ -128,6 +149,7 @@ class App extends React.Component {
     } else if (view === 'leaderboard') {
       return (
         <>
+          {header}
           <h1 className="unselectable">Leaderboard</h1>
           <div className="itemContainer unselectable">
             <button onClick={() => this.setState({ view: 'vote' })}>Back</button>
