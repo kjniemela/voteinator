@@ -5,12 +5,46 @@
   user-select: none; /* Standard */
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
+  margin: 0;
   background-image: url('https://open.kattis.com/images/site/content/kattis-grain.png');
+}
+
+.header {
+  margin: 0;
+  padding: 10px;
+  height: 60px;
+  background-color: #777;
+  border-bottom: 5px solid #fabb47;
+}
+
+.header h1 {
+  margin: 0;
+  color: whitesmoke;
+  filter: drop-shadow(0 0 5px rgb(0 0 0));
 }
 
 h1 {
   text-align: center;
+}
+
+h3 {
+  text-align: center;
+  border: 4px outset darkgray;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  width: 200px;
+  margin: 15px auto;
+  padding: 5px;
+}
+
+h3:active {
+  text-align: center;
+  border: 4px inset darkgray;
 }
 
 .itemContainer {
