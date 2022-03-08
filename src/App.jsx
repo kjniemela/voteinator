@@ -129,7 +129,7 @@ class App extends React.Component {
     const { group, itemA, itemB, view, rankList, canVote } = this.state;
     const header = (
       <div className="header">
-        <h1 className="unselectable" onClick={() => this.setGroup('')}>Sortinator</h1>
+        <h1 className="unselectable" onClick={() => this.setGroup('')}>Voteinator</h1>
       </div>
     );
     if (!group) {
