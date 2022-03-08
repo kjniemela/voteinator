@@ -39,7 +39,6 @@ class App extends React.Component {
 
   fetchRandomPair() {
     const { group, lastCallTime } = this.state;
-    console.log(group);
     if (group) {
       let { nextItemA, nextItemB, nextPairId, pairId } = this.state;
       const itemA = nextItemA;
