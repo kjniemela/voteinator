@@ -47,6 +47,21 @@ h3:active {
   border: 4px inset darkgray;
 }
 
+button {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  border: 4px outset darkgray;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  margin: 5px 2px;
+}
+
+button:active {
+  border: 4px inset darkgray;
+}
+
 .itemContainer {
   display: flex;
   justify-content: center;
