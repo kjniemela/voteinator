@@ -136,6 +136,10 @@ class App extends React.Component {
       return (
         <>
           {header}
+          <h1 className="unselectable">Behold, the Voteinator!</h1>
+          <div className="about">
+            <p>Voteinator is a fun little application that allows you to vote for your favorite item in a given category. The basic premise is very simple: you are presented with two items, and you click on the one you like better. Your choice is then recorded to the leaderboard - the item you chose will gain points, and the other item will loose points. The score of any item can be viewed by checking out the leaderboard. May the best item win!</p>
+          </div>
           <h1 className="unselectable">Categories</h1>
           <div className="categories">
             <h3 className="unselectable" onClick={() => this.setGroup('letters')}>Letters</h3>
