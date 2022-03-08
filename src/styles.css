@@ -38,7 +38,7 @@ h3 {
   border-radius: 5px;
   background-color: whitesmoke;
   width: 200px;
-  margin: 15px auto;
+  margin: 15px 5px;
   padding: 5px;
 }
 
@@ -60,6 +60,12 @@ button {
 
 button:active {
   border: 4px inset darkgray;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .itemContainer {
