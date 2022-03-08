@@ -142,9 +142,9 @@ class App extends React.Component {
           </div>
           <h1 className="unselectable">Categories</h1>
           <div className="categories">
+            <h3 className="unselectable" onClick={() => this.setGroup('flags')}>Flags</h3>
             <h3 className="unselectable" onClick={() => this.setGroup('letters')}>Letters</h3>
             <h3 className="unselectable" onClick={() => this.setGroup('colors')}>Colors</h3>
-            <h3 className="unselectable" onClick={() => this.setGroup('flags')}>Flags</h3>
           </div>
         </>
       );
@@ -160,7 +160,7 @@ class App extends React.Component {
           <div className="itemContainer">
             {itemA ? (
               <Item item={itemA} voteFn={canVote ? () => this.voteFor('A') : () => {}} />
-             ) : <button onClick={this.fetchRandomPair}>Load</button>}
+             ) : <button onClick={this.fetchRandomPair}>Load Items</button>}
             {itemB ? <Item item={itemB} voteFn={canVote ? () => this.voteFor('B') : () => {}} /> : null}
           </div>
           {/* <div className="itemContainer unselectable">
