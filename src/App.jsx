@@ -148,10 +148,10 @@ class App extends React.Component {
         <>
           {header}
           <h1 className="unselectable">Which {location.hash.substr(1, location.hash.length-2)} would you prefer?</h1>
-          <div className="itemContainer unselectable">
+          <div className="itemContainer">
             <button onClick={() => this.setState({ view: 'leaderboard' })}>Leaderboard</button>
           </div>
-          <div className="itemContainer unselectable">
+          <div className="itemContainer">
             {itemA ? (
               <Item item={itemA} voteFn={canVote ? () => this.voteFor('A') : () => {}} />
              ) : <button onClick={this.fetchRandomPair}>Load</button>}
@@ -167,11 +167,11 @@ class App extends React.Component {
         <>
           {header}
           <h1 className="unselectable">Leaderboard</h1>
-          <div className="itemContainer unselectable">
+          <div className="itemContainer">
             <button onClick={() => this.setState({ view: 'vote' })}>Back</button>
             <button onClick={this.fetchLeaderboard}>Refresh</button>
           </div>
-          <div className="itemContainer unselectable">
+          <div className="itemContainer">
             <Leaderboard rankList={rankList}/>
           </div>
         </>
