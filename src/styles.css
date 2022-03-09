@@ -40,11 +40,21 @@ body {
   filter: drop-shadow(0 0 5px rgb(0 0 0));
 }
 
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #4f8ff5;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 h1 {
   text-align: center;
 }
 
-h3 {
+.categoryBtn {
   text-align: center;
   border: 4px outset darkgray;
   border-radius: 5px;
@@ -77,6 +87,16 @@ button:active {
 .about {
   padding: 1em 15%;
   font-size: 1.4em;
+}
+
+.aboutMeContainer {
+  display: flex;
+}
+
+.profilePic {
+  height: 100px;
+  margin-right: 15px;
+  border-radius: 50px;
 }
 
 .categories {

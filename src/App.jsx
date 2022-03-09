@@ -3,6 +3,7 @@ import React from "react";
 
 import Item from "./components/Item.jsx";
 import Leaderboard from "./components/Leaderboard.jsx";
+import About from "./components/About.jsx";
 
 const API_ADDR = 'https://2a6sqsw1lf.execute-api.us-east-1.amazonaws.com';
 
@@ -135,19 +136,28 @@ class App extends React.Component {
         </div>
       </div>
     );
-    if (!group) {
+    if (view === 'about') {
+      return (
+        <>
+          {header}
+          <About />
+        </>
+      );
+    }
+    else if (!group) {
       return (
         <>
           {header}
           <h1 className="unselectable">Behold, the Voteinator!</h1>
           <div className="about">
             <p>Voteinator is a fun little application that allows you to vote for your favorite item in a given category. The basic premise is very simple: you are presented with two items, and you click on the one you like better. Your choice is then recorded to the leaderboard - the item you chose will gain points, and the other item will loose points. The score of any item can be viewed by checking out the leaderboard. May the best item win!</p>
+            <p>For more information about this project, visit the <a onClick={() => this.setState({ view: 'about' })}>about</a> page.</p>
           </div>
           <h1 className="unselectable">Categories</h1>
           <div className="categories">
-            <h3 className="unselectable" onClick={() => this.setGroup('flags')}>Flags</h3>
-            <h3 className="unselectable" onClick={() => this.setGroup('letters')}>Letters</h3>
-            <h3 className="unselectable" onClick={() => this.setGroup('colors')}>Colors</h3>
+            <h3 className="categoryBtn unselectable" onClick={() => this.setGroup('flags')}>Flags</h3>
+            <h3 className="categoryBtn unselectable" onClick={() => this.setGroup('letters')}>Letters</h3>
+            <h3 className="categoryBtn unselectable" onClick={() => this.setGroup('colors')}>Colors</h3>
           </div>
         </>
       );
