@@ -15,6 +15,8 @@ body {
 }
 
 .header {
+  display: flex;
+  justify-content: center;
   margin: 0;
   padding: 10px;
   height: 60px;
@@ -22,29 +24,85 @@ body {
   border-bottom: 5px solid #fabb47;
 }
 
-.header h1 {
+.logoContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.headerLogo {
+  height: 100%;
+  margin-right: 8px;
+}
+
+.headerTitle {
   margin: 0;
   color: whitesmoke;
   filter: drop-shadow(0 0 5px rgb(0 0 0));
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #4f8ff5;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 h1 {
   text-align: center;
 }
 
-h3 {
+.categoryBtn {
   text-align: center;
   border: 4px outset darkgray;
   border-radius: 5px;
-  background-color: whitesmoke;
+  background-color: #ffe0a7;
   width: 200px;
-  margin: 15px auto;
+  margin: 15px 5px;
   padding: 5px;
 }
 
 h3:active {
   text-align: center;
   border: 4px inset darkgray;
+}
+
+button {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  border: 4px outset darkgray;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  margin: 5px 2px;
+}
+
+button:active {
+  border: 4px inset darkgray;
+}
+
+.about {
+  padding: 1em 15%;
+  font-size: 1.4em;
+}
+
+.aboutMeContainer {
+  display: flex;
+}
+
+.profilePic {
+  height: 100px;
+  margin-right: 15px;
+  border-radius: 50px;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .itemContainer {
