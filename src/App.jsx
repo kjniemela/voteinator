@@ -22,7 +22,7 @@ class App extends React.Component {
       lastCallTime: new Date(),
       canVote: true,
       rankList: [],
-      view: 'vote',
+      view: 'home',
     };
     this.fetchRandomPair = this.fetchRandomPair.bind(this);
     this.fetchLeaderboard = this.fetchLeaderboard.bind(this);
@@ -38,7 +38,7 @@ class App extends React.Component {
     }
   }
 
-  fetchRandomPair() {
+  fetchRandomPair(callback) {
     const { group, lastCallTime } = this.state;
     if (group) {
       let { nextItemA, nextItemB, nextPairId, pairId } = this.state;
@@ -53,7 +53,7 @@ class App extends React.Component {
               nextItemA = data.Items[0];
               nextItemB = data.Items[1];
               nextPairId = data.pairId;
-              this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true });
+              this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true }, callback);
             })
             .catch((err) => {
               console.error(err);
@@ -73,7 +73,7 @@ class App extends React.Component {
         nextItemA: null,
         nextItemB: null,
         nextPairId: null,
-      });
+      }, callback);
     }
   }
 
@@ -119,9 +119,16 @@ class App extends React.Component {
 
   setGroup(group) {
     location.hash = group ? `#${group}` : '';
-    this.setState({ group, view: 'vote' }, () => {
-      this.fetchRandomPair();
-      setTimeout(this.fetchRandomPair, 2000);
+    console.log('group', this.state.view);
+    this.setState({ group }, () => {
+      console.log('fetch1', this.state.view);
+      this.fetchRandomPair(() => {
+        console.log('fetch2', this.state.view);
+        this.fetchRandomPair(() => {
+          console.log('view', this.state.view);
+          this.setState({ view: group ? 'vote' : 'home' });
+        });
+      });
       this.fetchLeaderboard();
     });
   }
@@ -144,7 +151,7 @@ class App extends React.Component {
         </>
       );
     }
-    else if (!group) {
+    else if (view === 'home') {
       return (
         <>
           {header}
