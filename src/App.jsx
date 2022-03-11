@@ -22,7 +22,7 @@ class App extends React.Component {
       lastCallTime: new Date(),
       canVote: true,
       rankList: [],
-      view: 'home',
+      view: location.hash.substr(1) ? 'loading' : 'home',
     };
     this.fetchRandomPair = this.fetchRandomPair.bind(this);
     this.fetchLeaderboard = this.fetchLeaderboard.bind(this);
@@ -32,7 +32,11 @@ class App extends React.Component {
   componentDidMount() {
     const { group } = this.state;
     if (group) {
-      this.fetchRandomPair(this.fetchRandomPair);
+      this.fetchRandomPair(() => {
+        this.fetchRandomPair(() => {
+          if (group) this.setState({ view: 'vote' });
+        });
+      });
       this.fetchLeaderboard();
     }
     window.onhashchange = () => {
@@ -55,7 +59,9 @@ class App extends React.Component {
               nextItemA = data.Items[0];
               nextItemB = data.Items[1];
               nextPairId = data.pairId;
-              this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true }, callback);
+              if (group === this.state.group) {
+                this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true }, callback);
+              }
             })
             .catch((err) => {
               console.error(err);
