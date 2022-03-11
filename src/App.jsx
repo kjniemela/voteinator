@@ -35,6 +35,9 @@ class App extends React.Component {
       this.fetchRandomPair(this.fetchRandomPair);
       this.fetchLeaderboard();
     }
+    window.onhashchange = () => {
+      this.setGroup(location.hash.substr(1));
+    };
   }
 
   fetchRandomPair(callback) {
@@ -118,10 +121,11 @@ class App extends React.Component {
 
   setGroup(group) {
     location.hash = group ? `#${group}` : '';
-    this.setState({ group, view: 'loading' }, () => {
+    const view = group ? 'loading' : 'home';
+    this.setState({ group, view }, () => {
       this.fetchRandomPair(() => {
         this.fetchRandomPair(() => {
-          this.setState({ view: group ? 'vote' : 'home' });
+          if (group) this.setState({ view: 'vote' });
         });
       });
       this.fetchLeaderboard();
