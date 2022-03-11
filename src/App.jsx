@@ -22,7 +22,7 @@ class App extends React.Component {
       lastCallTime: new Date(),
       canVote: true,
       rankList: [],
-      view: 'vote',
+      view: location.hash.substr(1) ? 'loading' : 'home',
     };
     this.fetchRandomPair = this.fetchRandomPair.bind(this);
     this.fetchLeaderboard = this.fetchLeaderboard.bind(this);
@@ -32,13 +32,19 @@ class App extends React.Component {
   componentDidMount() {
     const { group } = this.state;
     if (group) {
-      this.fetchRandomPair();
-      setTimeout(this.fetchRandomPair, 2000);
+      this.fetchRandomPair(() => {
+        this.fetchRandomPair(() => {
+          if (group) this.setState({ view: 'vote' });
+        });
+      });
       this.fetchLeaderboard();
     }
+    window.onhashchange = () => {
+      this.setGroup(location.hash.substr(1));
+    };
   }
 
-  fetchRandomPair() {
+  fetchRandomPair(callback) {
     const { group, lastCallTime } = this.state;
     if (group) {
       let { nextItemA, nextItemB, nextPairId, pairId } = this.state;
@@ -53,7 +59,9 @@ class App extends React.Component {
               nextItemA = data.Items[0];
               nextItemB = data.Items[1];
               nextPairId = data.pairId;
-              this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true });
+              if (group === this.state.group) {
+                this.setState({ nextItemA, nextItemB, nextPairId, lastCallTime: new Date(), canVote: true }, callback);
+              }
             })
             .catch((err) => {
               console.error(err);
@@ -73,7 +81,7 @@ class App extends React.Component {
         nextItemA: null,
         nextItemB: null,
         nextPairId: null,
-      });
+      }, callback);
     }
   }
 
@@ -119,9 +127,13 @@ class App extends React.Component {
 
   setGroup(group) {
     location.hash = group ? `#${group}` : '';
-    this.setState({ group, view: 'vote' }, () => {
-      this.fetchRandomPair();
-      setTimeout(this.fetchRandomPair, 2000);
+    const view = group ? 'loading' : 'home';
+    this.setState({ group, view }, () => {
+      this.fetchRandomPair(() => {
+        this.fetchRandomPair(() => {
+          if (group) this.setState({ view: 'vote' });
+        });
+      });
       this.fetchLeaderboard();
     });
   }
@@ -144,7 +156,7 @@ class App extends React.Component {
         </>
       );
     }
-    else if (!group) {
+    else if (view === 'home') {
       return (
         <>
           {header}
@@ -193,6 +205,13 @@ class App extends React.Component {
           <div className="itemContainer">
             <Leaderboard rankList={rankList}/>
           </div>
+        </>
+      );
+    } else if (view === 'loading') {
+      return (
+        <>
+          {header}
+          <h1>Loading, please wait...</h1>
         </>
       );
     }
