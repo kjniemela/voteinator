@@ -32,8 +32,7 @@ class App extends React.Component {
   componentDidMount() {
     const { group } = this.state;
     if (group) {
-      this.fetchRandomPair();
-      setTimeout(this.fetchRandomPair, 2000);
+      this.fetchRandomPair(this.fetchRandomPair);
       this.fetchLeaderboard();
     }
   }
@@ -119,13 +118,9 @@ class App extends React.Component {
 
   setGroup(group) {
     location.hash = group ? `#${group}` : '';
-    console.log('group', this.state.view);
-    this.setState({ group }, () => {
-      console.log('fetch1', this.state.view);
+    this.setState({ group, view: 'loading' }, () => {
       this.fetchRandomPair(() => {
-        console.log('fetch2', this.state.view);
         this.fetchRandomPair(() => {
-          console.log('view', this.state.view);
           this.setState({ view: group ? 'vote' : 'home' });
         });
       });
@@ -200,6 +195,13 @@ class App extends React.Component {
           <div className="itemContainer">
             <Leaderboard rankList={rankList}/>
           </div>
+        </>
+      );
+    } else if (view === 'loading') {
+      return (
+        <>
+          {header}
+          <h1>Loading, please wait...</h1>
         </>
       );
     }
