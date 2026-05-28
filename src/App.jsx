@@ -148,6 +148,13 @@ class App extends React.Component {
         </div>
       </div>
     );
+    const categories = {
+      'countryflags': ['country flag', 'Country Flags'],
+      'flags': ['flag', 'All Flags'],
+      'letters': ['letter', 'Letters'],
+      'colors': ['color', 'Colors'],
+      'xkcd': ['xkcd strip', 'Xkcd Strips'],
+    };
     if (view === 'about') {
       return (
         <>
@@ -167,9 +174,9 @@ class App extends React.Component {
           </div>
           <h1 className="unselectable">Categories</h1>
           <div className="categories">
-            <h3 className="categoryBtn unselectable" onClick={() => this.setGroup('flags')}>Flags</h3>
-            <h3 className="categoryBtn unselectable" onClick={() => this.setGroup('letters')}>Letters</h3>
-            <h3 className="categoryBtn unselectable" onClick={() => this.setGroup('colors')}>Colors</h3>
+            {Object.keys(categories).map((key) => (
+              <h3 className="categoryBtn unselectable" onClick={() => this.setGroup(key)}>{categories[key][1]}</h3>
+            ))}
           </div>
         </>
       );
@@ -178,15 +185,15 @@ class App extends React.Component {
       return (
         <>
           {header}
-          <h1 className="unselectable">Which {location.hash.substr(1, location.hash.length-2)} would you prefer?</h1>
+          <h1 className="unselectable">Which {categories[location.hash.substring(1)][0]} would you prefer?</h1>
           <div className="itemContainer">
             <button onClick={() => this.setState({ view: 'leaderboard' })}>Leaderboard</button>
           </div>
           <div className="itemContainer">
             {itemA ? (
-              <Item item={itemA} voteFn={canVote ? () => this.voteFor('A') : () => {}} />
+              <Item item={itemA} voteFn={canVote ? () => this.voteFor('A') : () => {console.log('test')}} />
              ) : <button onClick={this.fetchRandomPair}>Load Items</button>}
-            {itemB ? <Item item={itemB} voteFn={canVote ? () => this.voteFor('B') : () => {}} /> : null}
+            {itemB ? <Item item={itemB} voteFn={canVote ? () => this.voteFor('B') : () => {console.log('test')}} /> : null}
           </div>
           {/* <div className="itemContainer unselectable">
             <button onClick={this.fetchRandomPair}>New Pair</button>
